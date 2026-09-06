@@ -1,6 +1,6 @@
 {
     "name": "@robert.tools/eleventy-filter-svg",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Makes an svg image inline.",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",

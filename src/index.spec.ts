@@ -1,18 +1,48 @@
-/**
- * 🧪 testing module
- * @version 1.0.0
- * @date 2026-09-06
- * @license MIT
- * @author Robert Willemelis <github.com/willi84>
- */
-import { sample } from './index';
+import fn from './index';
+import mock from 'mock-fs';
 
-describe('@robert.tools/eleventy-filter-svg', () => {
-    it('should return a eleventy-filter-svg string', () => {
-        expect(sample('hello')).toBe('sample: hello');
+describe('svg filter', () => {
+    const FN = fn;
+    beforeEach(() => {
+        mock({
+            './src/frontend/assets/logo.svg': '<svg width="100"></svg>',
+            'other-logo.svg': '<svg width="200"></svg>',
+            'base.svg': '<svg></svg>',
+        });
     });
 
-    it('should return a eleventy-filter-svg string with empty input', () => {
-        expect(sample('')).toBe('sample: ');
+    afterEach(() => {
+        mock.restore();
+    });
+
+    // TODO: andere pfad
+    it('should return the svg if defined', () => {
+        const result = FN('base.svg');
+        const EXPECTED = '<svg></svg>'; // no extra css, different dimension
+        expect(result).toEqual(EXPECTED);
+    });
+    it('should return the svg if defined', () => {
+        const result = FN('logo.svg', [50, 80], '', {}); // no extra css, different dimension
+        expect(result).toContain('width="50" height="80"');
+    });
+    it('should return the svg if defined', () => {
+        const result = FN('logo.svg', [25], 'my-class', {}); // extra css, single dimension
+        expect(result).toContain('width="25" height="25"');
+    });
+    it('should return the svg if defined', () => {
+        const result = FN('other-logo.svg', 20, '', {}); // single dimension, other-logo
+        expect(result).toContain('width="20" height="20"');
+    });
+
+    it('should return the svg if defined', () => {
+        const options = { ariaHidden: true, focusable: false };
+        const EXPECTED =
+            '<svg width="50" height="50" class="my-class" aria-hidden="true" focusable="false"></svg>';
+        const result = FN('logo.svg', [50, 50], 'my-class', options);
+        expect(result).toEqual(EXPECTED);
+    });
+    it('should return nothing if the svg is not defined', () => {
+        const result = FN('not-existing.svg', [50, 50], 'my-class', {});
+        expect(result).toEqual('');
     });
 });

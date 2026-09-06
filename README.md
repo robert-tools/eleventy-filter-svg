@@ -13,9 +13,15 @@ npm install @robert.tools/eleventy-filter-svg
 ### 📝 Sample usage
 
 ```typescript
-import { eleventy-filter-svg } from '@robert.tools/eleventy-filter-svg';
+import svg from '@robert.tools/eleventy-filter-svg';
+```
+## 📜 Usage
 
-eleventy-filter-svg('hello'); // 'eleventy-filter-svg: hello'
+```nunjucks
+{{ 'file.svg' | svg }} {# get svg from current folder or assets folder #}
+{{ 'file.svg' | svg([100, 200]) }} {# get svg with specified dimensions #}
+{{ 'file.svg' | svg(100) }} {# get svg with single dimension (width==height) #}
+{{ 'file.svg' | svg(100, 'my-css-class', { ariaHidden: true }) }} {# get svg with a CSS class and additional attributes #}
 ```
 
 ## 🗃️ commands

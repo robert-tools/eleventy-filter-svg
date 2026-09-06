@@ -5,9 +5,9 @@ describe('svg filter', () => {
     const FN = fn;
     beforeEach(() => {
         mock({
-            './src/frontend/assets/logo.svg': '<svg width="100"></svg>',
-            'other-logo.svg': '<svg width="200"></svg>',
-            'base.svg': '<svg></svg>',
+            './src/frontend/assets/logo.svg': '<svg id="logo"></svg>',
+            'other-logo.svg': '<svg id="other-logo"></svg>',
+            'base.svg': '<svg id="base"></svg>',
             'assets/image.svg': '<svg id="assets"></svg>',
         });
     });
@@ -18,7 +18,17 @@ describe('svg filter', () => {
 
     it('should return the svg if defined', () => {
         const result = FN('base.svg');
-        const EXPECTED = '<svg></svg>'; // no extra css, different dimension
+        const EXPECTED = '<svg id="base"></svg>'; // no extra css, different dimension
+        expect(result).toEqual(EXPECTED);
+    });
+    it('should return the svg if defined', () => {
+        const result = FN('/assets/logo.svg');
+        const EXPECTED = '<svg id="logo"></svg>'; // no extra css, different dimension
+        expect(result).toEqual(EXPECTED);
+    });
+    it('should return the svg if defined', () => {
+        const result = FN('assets/logo.svg');
+        const EXPECTED = '<svg id="logo"></svg>'; // no extra css, different dimension
         expect(result).toEqual(EXPECTED);
     });
     it('should return the svg if defined', () => {
@@ -42,13 +52,13 @@ describe('svg filter', () => {
     });
     it('should return the svg if defined', () => {
         const result = FN('other-logo.svg', 20, '', {}); // single dimension, other-logo
-        expect(result).toContain('width="20" height="20"');
+        expect(result).toContain('width="20" height="20" id="other-logo"');
     });
 
     it('should return the svg if defined', () => {
         const options = { ariaHidden: true, focusable: false };
         const EXPECTED =
-            '<svg width="50" height="50" class="my-class" aria-hidden="true" focusable="false"></svg>';
+            '<svg width="50" height="50" class="my-class" aria-hidden="true" focusable="false" id="logo"></svg>';
         const result = FN('logo.svg', [50, 50], 'my-class', options);
         expect(result).toEqual(EXPECTED);
     });

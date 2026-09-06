@@ -68,8 +68,10 @@ const fn = (
         dimensions = `width="${size[0]}" height="${size[1]}"`;
     }
     // replace SVG tag with updated attributes
-    const attrs = `${dimensions} ${_css} ${ariaHidden} ${focusable}`;
-    content = content.replace('<svg ', `<svg ${attrs.trim()}`);
+    const attrs = `${dimensions} ${_css} ${ariaHidden} ${focusable}`.trim(); // avoid unneeded spaces
+    if (attrs !== '') {
+        content = content.replace('<svg ', `<svg ${attrs.trim()} `);
+    }
     return content;
 };
 export default fn;

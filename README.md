@@ -1,21 +1,21 @@
-# 🗂️ @robert.tools/sample
+# 🗂️ @robert.tools/eleventy-filter-svg
 
-<description>
+Makes an svg image inline.
 
 ## 📜 Usage
 
 ### 🟢 Installation
 
 ```bash
-npm install @robert.tools/sample
+npm install @robert.tools/eleventy-filter-svg
 ```
 
 ### 📝 Sample usage
 
 ```typescript
-import { <name> } from '@robert.tools/sample';
+import { eleventy-filter-svg } from '@robert.tools/eleventy-filter-svg';
 
-<name>('hello'); // '<name>: hello'
+eleventy-filter-svg('hello'); // 'eleventy-filter-svg: hello'
 ```
 
 ## 🗃️ commands

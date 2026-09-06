@@ -42,11 +42,19 @@ const fn = (
     opts: any = {}
 ) => {
     let content: string = '';
+    let filePath = file.replace(/^\//, '');
+    const FOLDERS = [
+        './src/frontend/assets/',
+        './',
+        'assets/',
+        './src/frontend/',
+    ];
     // get file content
-    if (FS.hasFile(`./src/frontend/assets/${file}`)) {
-        content = FS.readFile(`./src/frontend/assets/${file}`) as string;
-    } else if (FS.hasFile(`${file}`)) {
-        content = FS.readFile(`${file}`) as string;
+    for (const folder of FOLDERS) {
+        if (FS.hasFile(`${folder}${filePath}`)) {
+            content = FS.readFile(`${folder}${filePath}`) as string;
+            break;
+        }
     }
     // get attributes
     const ariaHidden = getAttr(opts, 'ariaHidden', 'aria-hidden');
@@ -60,10 +68,8 @@ const fn = (
         dimensions = `width="${size[0]}" height="${size[1]}"`;
     }
     // replace SVG tag with updated attributes
-    content = content.replace(
-        '<svg ',
-        `<svg ${dimensions} ${_css} ${ariaHidden} ${focusable}`
-    );
+    const attrs = `${dimensions} ${_css} ${ariaHidden} ${focusable}`;
+    content = content.replace('<svg ', `<svg ${attrs.trim()}`);
     return content;
 };
 export default fn;

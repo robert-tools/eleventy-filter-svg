@@ -8,6 +8,7 @@ describe('svg filter', () => {
             './src/frontend/assets/logo.svg': '<svg width="100"></svg>',
             'other-logo.svg': '<svg width="200"></svg>',
             'base.svg': '<svg></svg>',
+            'assets/image.svg': '<svg id="assets"></svg>',
         });
     });
 
@@ -15,10 +16,20 @@ describe('svg filter', () => {
         mock.restore();
     });
 
-    // TODO: andere pfad
     it('should return the svg if defined', () => {
         const result = FN('base.svg');
         const EXPECTED = '<svg></svg>'; // no extra css, different dimension
+        expect(result).toEqual(EXPECTED);
+    });
+    it('should return the svg if defined', () => {
+        const result = FN('image.svg');
+        const EXPECTED = '<svg id="assets"></svg>'; // no extra css, different dimension
+        expect(result).toEqual(EXPECTED);
+    });
+    it('should return the svg if defined', () => {
+        // const result = FN('image.svg');
+        const result = FN('/assets/image.svg');
+        const EXPECTED = '<svg id="assets"></svg>'; // no extra css, different dimension
         expect(result).toEqual(EXPECTED);
     });
     it('should return the svg if defined', () => {
